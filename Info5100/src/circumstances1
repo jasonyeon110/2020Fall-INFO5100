@@ -1,0 +1,298 @@
+//Circumstance 1: Course management system
+
+Objects:
+	-Course:
+		Data: name, grade, 
+		Behavior: 
+		
+	-Student:
+		Data: name
+		Behavior: login, requestAccess, logout, downloadMaterials, takeQuize, browse, homePage, uploadAssignment
+		
+	-webSite:
+		Data: name
+		Behavior: showGrade, showClassMaterials, showGrade
+		
+	-Professor:
+		Data: name
+		Behavior: login, uploadClassMaterials, updateAssignment, updateGrade
+		
+Sequence of Invoking Behavior on Objects:
+
+Course info5100
+Student JiWoong
+webSite Canvas
+Professor Siva
+
+Siva.login(Canvas);
+Siva.uploadClassMaterials(info5100);
+JiWoong.login(Canvas);
+JiWoong.requestAccess(info5100);
+Siva.giveAccess(JiWoong, info5100);
+Siva.updateAssignments(info5100);
+
+while JiWoong.login(Canvas);
+	Canvas.showClassMaterials(info5100, JiWoong);
+	JiWoong.browse(info5100);
+	JiWoong.downloadMaterials(info5100);
+	
+	if JiWoong.takeQuize(info5100)
+		Siva.updateGrade(info5100, JiWoong);
+		Canvas.showGrade(info5100, JiWoong);
+		else
+			JiWoong.homePage(Canvas);
+			
+	if JiWoong.uploadAssignment(info5100)
+		Siva.checkAssignment(info5100, JiWoong);
+		Siva.updateGrade(info5100, JiWoong);
+		else
+			JiWoong.homePage(Canvas);
+	
+	if Jiwoong.logout;
+		break	
+
+--------------------------------------------------------
+//Circumstances 2: Pet adoption platform
+
+Objects:
+	-OnlineAdoption(local):
+		Data: server, webAddress
+		Behavior: displayPictures, checkOut, sendToCourier, isInStock, sendConfirmation, sendPickUpLocation, refund
+	
+	-Customer:
+		Data: name, ,address, phoneNumber, emailAddress, logInCredential, creditCard
+		Behavior: login, searchPet, adopt, cancelAdoption, drive, homeWithPet, takePicture
+		
+	-Pet:
+		Data: Gender, Age, Breed, Color, Price, location
+		Behavior: 	
+	 	
+	
+Sequence of Invoking Behavior on Objects:
+
+Customer JiWoong;
+OnlineAdoption puppySpot;
+Pet goldenRetriever;
+
+puppySpot JiWoong.login(logInCredential);
+Pet goldenRetriever = JiWoong.searchPet(gender, age, breed, color, price, location);
+puppySpot.displayPictures(goldenRetriever);
+
+if puppySpot.isInStock(goldenRetriever)
+	JiWoong.adopt(goldenRetriever);
+	puppySpot.checkOut(JiWoong.creditCard, JiWoong.address, JiWoong.phoneNumber, JiWoong.emailAddress);
+	puppySpot.sendConfirmation(jason.emailAddress, jason.phoneNumber);
+	puppySpot.sendPickUpLocation(goldenRetriever.location);
+	JiWoong.drive(goldenRetriever.location);
+	
+	if JiWoong.cancelAdoption(goldenRetriever)
+		puppySpot.refund(goldenRetriever, JiWoong);
+		
+		else
+			JiWoong.homeWithPet(goldenRetriever);
+			JiWoong.takePicture(goldenRetriever);
+	
+	else noPetToAdopt 
+--------------------------------------------------------
+
+//Circumstances 3: app to book airline ticket
+
+Objects:
+
+	-Passenger:
+		Data: logInCredential, name, creditCard, currentLocation, emailAddress, phoneNumber, numberOfBaggage, 
+		Behavior: login, searchFlight, bookFlight, cancelFlight, confirmBaggageFee, requestRefund, denyExtraBaggageFee
+	
+	-AirlineApp:
+		Data: name
+		Behavior: matchFlight, noMatchFlight, confirmationEmail, checkOut, askBaggage, extraBaggageFee, sendConfirmation, assignFlight, refund, denyRefund
+	
+	-Flight:
+		Data: from, destination, time, date
+		Behavior:
+	
+	-Baggage:
+		Data: destination, weight, nameOfOwner
+		Behavior:
+		
+				
+Sequence of Invoking Behavior on Objects:
+
+Passenger JiWoong;
+AirlineApp AsianaApp;
+Flight A747;
+
+JiWoong.login(logInCredential, currentLocation, name);
+JiWoong.searchFlight(destination, time, date);
+
+if AsianaApp.matchFlight(JiWoong.searchFlight)
+	JiWoong.bookFlight(destination, time, date);
+	AsianaApp.checkOut(JiWoong.creditCard, JiWoong.emailAddress, JiWoong.phoneNumber, JiWoong.numberOfBaggage);
+	
+	if JiWoong.numberOfBaggage moreThan 1
+		AsianaApp.extraBaggageFee(baggage * numberOfBaggage);
+		JiWoong.comfirmBaggageFee(JiWoong.creditCard);
+		else
+			continue
+			
+		If JiWoong.denyExtraBaggageFee
+			JiWoong.cancelFlight(A747.destination, A747.time, A757.date)
+			break
+			else
+				continue
+			
+	AsianaApp.assignFlight(A747);			
+	AsianaApp.sendConfirmation(JiWoong.emailAddress, JiWoong.phoneNumber);
+	
+	if JiWoong.cancelFlight(A747.destination, A747.time, A757.date) within 7 days
+		JiWoong.requestRefund(A747);
+		AsianaApp.refund(A747, JiWoong);
+		else
+			AsianaApp.denyRefund(A747, JiWoong);
+	
+	else AsianaApp.noMatchFlight
+
+--------------------------------------------------------
+
+//Circumstances 4: a course registration platform
+
+Objects:
+
+	-Student:
+		Data: name, loginCredential, schedule
+		Behavior: login, searchCourse, tryRegister
+	
+	-Course:
+		Data: name, time, classRoom, date
+		Behavior: 
+		
+	-Platform:
+		Data: name
+		Behavior: updateCourse, showCourseInfo, denyRegistration, register. showRegisteredCourse
+		
+Sequence of Invoking Behavior on Objects:
+		
+Platform myNorth;
+Course info5100, info6000, info4000, comp5000;
+Student JiWoong;
+	
+myNorth.updateCourse(info5100, 15to17, MWF, class1);
+myNorth.updateCourse(info4000, 13to16, TTH, class2);
+myNorth.updateCourse(info6000, 10to11, F, class1);
+myNorth.updateCourse(comp5000, 14to16, TF, class3);
+
+JiWoong.login(logInCredential);
+
+Course info5100 = JiWoong.searchCourse(name, time, classRoom, date);
+myNorth.showCourseInfo(info5100);
+JiWoong.tryRegister(info5100);
+myNorth.checkConflict(JiWoong.schedule);
+
+if myNorth.checkConflit(JiWoong.schedule) == True
+	myNorth.denyRegistration(JiWoong.tryRegister(info5100));
+	else
+		myNorth.register(JiWoong.tryRegister(info5100));
+		continue
+	
+	Course info4000 = JiWoong.searchCourse(name, time, classRoom, date);
+	myNorth.showCourseInfo(info4000);
+	JiWoong.tryRegister(info4000);
+	myNorth.checkConflict(JiWoong.schedule);
+	
+	if myNorth.checkConflit(JiWoong.schedule) == True
+		myNorth.denyRegistration(JiWoong.tryRegister(info4000));
+		else
+			myNorth.register(JiWoong.tryRegister(info4000));
+			continue
+		
+		Course info6000 = JiWoong.searchCourse(name, time, classRoom, date);
+		myNorth.showCourseInfo(info6000);
+		JiWoong.tryRegister(info6000);
+		myNorth.checkConflict(JiWoong.schedule);
+			
+		if myNorth.checkConflit(JiWoong.schedule) == True
+			myNorth.denyRegistration(JiWoong.tryRegister(info6000));
+			else					
+				myNorth.register(JiWoong.tryRegister(info6000));
+				continue
+	
+	
+			Course comp5000 = JiWoong.searchCourse(name, time, classRoom, date);
+			myNorth.showCourseInfo(comp5000);
+			JiWoong.tryRegister(comp5000);
+			myNorth.checkConflict(JiWoong.schedule);
+			
+			if myNorth.checkConflit(JiWoong.schedule) == True
+				myNorth.denyRegistration(JiWoong.tryRegister(comp5000));
+				else
+					myNorth.register(JiWoong.tryRegister(comp5000));
+					continue
+
+			myNorth.showRegisteredCourse(JiWoong.schedule);
+			
+
+--------------------------------------------------------
+
+//Circumstances 5: Food delivery App
+
+Objects:
+
+	-Customer:
+		Data: name, pickUpLocation, creditCard, logInCredential, phoneNumber, menu
+		Behavior: openApp, searchFood, buy, addToCart, confirm, foodPickUp
+		
+	-Restaurant:
+		Data: nameOfFood, price, picture, location, menu
+		Behavior: notifyCourier, getMenu, foodReady
+		
+	-Food:
+		Data: name, spicyLevel, price, picture
+		Behavior:
+		
+	-DeliveryApp:
+		Data: name
+		Behavior: checkOut, showOtherMenu, showDetailInfo, waitTime, sendInfo, holdInfo, notifyCourier, sendPayment
+		
+	-Courier:
+		Data: name
+		Behavior: pickUpFood, drive, call, notifyApp
+		
+Sequence of Invoking Behavior on Objects:
+
+Customer JiWoong;
+DeliveryApp Uber;
+Courier A1;
+
+JiWoong.openApp(Uber, logInCredential);
+Restaurant Konami = JiWoong.searchFood(nameOfFood, price, picture);
+Food DragonRoll = JiWoong.addToCart(Uber);
+
+if Konami DragonRoll available
+	JiWoong.buy(DragonRoll);
+	Uber.showDetailInfo(price, waitTime);
+	JiWoong.confirm(Uber.ShowDetailInfo);
+	Uber.holdInfo(JiWoong.creditCard, JiWoong.phoneNumber, JiWoong.pickUpLocation);
+	Uber.sendInfo(Konami, JiWoong.menu);
+	Konami.getMenu(JiWoong.menu);
+	Konami.foodReady(Uber);
+	Uber.notifyCourier(A1, Konami.location, JiWoong.location);
+	A1.pickUpFood(JiWoong.menu);
+	A1.drive(JiWoong.location);
+	A1.call(JiWoong.phoneNumber);
+	JiWoong.foodPickUp(JiWoong.menu);
+	JiWoong.confirm(JiWoong.menu, Uber);
+	A1.notifyApp(Uber);
+	Uber.sendPayMent(Konami, A1);
+	
+	else
+		Uber.showOtherMenu(Konami.menu);
+
+
+
+
+	
+			
+	
+	
+	
+	
