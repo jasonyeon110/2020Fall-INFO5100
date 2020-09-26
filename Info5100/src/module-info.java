@@ -1,2 +1,0 @@
-module Info5100 {
-}
