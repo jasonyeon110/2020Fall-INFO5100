@@ -30,8 +30,8 @@ public class Test {
 		java.registerStudent(h);
 		java.registerStudent(i);
 		java.registerStudent(j);
-		java.registerStudent(k);
-		java.registerStudent(l);
+		java.registerStudent(k); // rejected to register class, on the waiting list
+		java.registerStudent(l); // rejected to register class, on the waiting list
 	}
 
 }
