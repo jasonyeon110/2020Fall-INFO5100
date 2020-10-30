@@ -15,7 +15,7 @@ public class TestAnimal {
 		System.out.println(d);
 		d.setBoardStart(1, 30, 2020);
 		d.setBoardEnd(10, 30, 2020);
-		System.out.println(d.boarding(4, 1, 2021));
+		System.out.println(d.boarding(4, 1, 2021)); // false
 		
 		
 		System.out.println("------------------------------");
@@ -25,8 +25,7 @@ public class TestAnimal {
 		System.out.println(c);
 		c.setBoardStart(1, 30, 2020);
 		c.setBoardEnd(10, 30, 2020);
-
-		System.out.println(c.boarding(3, 1, 2020));
+		System.out.println(c.boarding(3, 1, 2020)); //true
 		
 
 	}

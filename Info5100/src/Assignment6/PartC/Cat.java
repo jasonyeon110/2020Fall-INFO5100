@@ -1,8 +1,8 @@
 package Assignment6.PartC;
 
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 //import jdk.javadoc.internal.tool.Start;
 
@@ -37,7 +37,7 @@ public class Cat extends Pet implements Boardable {
 	}
 	
 	@Override
-	public void setBoardStart(int month, int day, int year) {
+	public void setBoardStart(int month, int day, int year) throws DateTimeException {
 		try {
 			startDate = LocalDate.of(year, month, day);
 		}catch (DateTimeException e) {
@@ -48,7 +48,7 @@ public class Cat extends Pet implements Boardable {
 	
 
 	@Override
-	public void setBoardEnd(int month, int day, int year) {
+	public void setBoardEnd(int month, int day, int year) throws DateTimeException {
 		try {
 			endDate = LocalDate.of(year, month, day);
 		}catch (DateTimeException e) {
@@ -58,7 +58,7 @@ public class Cat extends Pet implements Boardable {
 	}
 
 	@Override
-	public boolean boarding (int month, int day, int year) {
+	public boolean boarding (int month, int day, int year) throws DateTimeException{
 		
 		boolean isBoardingTime = false;
 		
