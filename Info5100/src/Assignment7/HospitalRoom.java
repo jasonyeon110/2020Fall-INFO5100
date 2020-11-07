@@ -6,8 +6,8 @@ import java.util.List;
 public class HospitalRoom {
     
 
-	   private final Object doctorLock = new Object();
-	   private final Object patientLock = new Object();
+	   private final Object doctorMinion = new Object();
+	   private final Object angryNurse = new Object();
 	   private List<Doctor> inRoomDoctor = new ArrayList<>();
 	   private List<Patient> inRoomPatient = new ArrayList<>();
 	   private final int ROOM_LIMIT = 3;
@@ -16,20 +16,20 @@ public class HospitalRoom {
 
 	   public boolean doctorEnter(Doctor d) throws InterruptedException {
 
-	       synchronized (doctorLock) {
+	       synchronized (doctorMinion) {
 	           //If no Doctor is in the room, add doctor d to the room
 	           if (inRoomDoctor.size() == 0) {
 
 	               inRoomDoctor.add(d);
 	               System.out.println("Doctor " + d.name + " Entered, Number of Doctor " + inRoomDoctor.size());
 
-	               doctorLock.notify();
+	               doctorMinion.notify();
 	               return true;
 
 	           } else {
 	               System.out.println("Doctor " + d.name + " is waiting to Enter, Number of Doctor " + inRoomDoctor.size());
 
-	               doctorLock.wait();
+	               doctorMinion.wait();
 	               return false;
 	           }
 
@@ -39,15 +39,15 @@ public class HospitalRoom {
 
 	   public boolean doctorLeave(Doctor d) throws InterruptedException {
 
-	       synchronized (doctorLock) {
+	       synchronized (doctorMinion) {
 	           //If no doctor is in the room, just wait
 	           if (inRoomDoctor.size() == 0) {
-	               doctorLock.wait();
+	               doctorMinion.wait();
 	               return false;
 	               //If doctor is in the room then remove doctor
 	           } else {
 	               inRoomDoctor.remove(d);
-	               doctorLock.notify();
+	               doctorMinion.notify();
 	               System.out.println("Doctor " + d.name + " left, Number of doctor " + inRoomDoctor.size());
 	               return true;
 	           }
@@ -56,30 +56,30 @@ public class HospitalRoom {
 	   }
 
 	   public boolean patientEnter(Patient p) throws InterruptedException {
-	       synchronized (patientLock){
+	       synchronized (angryNurse){
 	           //while there are no more than 3 patient in the room, add patient to the list
 	           if (inRoomPatient.size() < ROOM_LIMIT) {
 	               inRoomPatient.add(p);
 	               System.out.println("Patient " + p.name + " Entered, Number of Patient " + inRoomPatient.size());
-	               patientLock.notify();
+	               angryNurse.notify();
 	               return true;
 	           } else{
 	               System.out.println("Patient " + p.name + " is waiting to enter, number of patients " + inRoomPatient.size());
-	               patientLock.wait();
+	               angryNurse.wait();
 	               return false;
 	           }
 	       }
 	   }
 
 	   public boolean patientLeave(Patient p) throws InterruptedException {
-	       synchronized (patientLock){
+	       synchronized (angryNurse){
 	           if(inRoomPatient.size() == ROOM_LIMIT) {
 	               inRoomPatient.remove(p);
 	               System.out.println("Patient " + p.name + " left the Room.  Number of Patient " + inRoomPatient.size());
-	               patientLock.notify();
+	               angryNurse.notify();
 	               return true;
 	           } else {
-	               patientLock.wait();
+	               angryNurse.wait();
 	               return false;
 	           }
 	       }
